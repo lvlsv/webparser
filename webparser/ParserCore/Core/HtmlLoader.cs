@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace ParserCore.Core
 {
-    class HtmlLoader
+    public class HtmlLoader
     {
-        readonly HttpClient client; // HttpClient - объект для работы с http протоколом.
+        readonly HttpClient client; // HttpClient - класс
         readonly string url;
 
         public HtmlLoader(IParserSettings settings)

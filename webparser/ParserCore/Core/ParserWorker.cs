@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ParserCore.Core
 {
-    class ParserWorker<T> where T : class
+    public class ParserWorker<T> where T : class
     {
         IParser<T> parser;
         IParserSettings parserSettings;
@@ -20,7 +20,16 @@ namespace ParserCore.Core
         public event Action<object> OnCompleted;
 
         public IParser<T> Parser { get => parser; set => parser = value; }
-        public IParserSettings ParserSettings { get => parserSettings; set => { parserSettings = value; loader = new HtmlLoader(ValueType); } }
+        public IParserSettings ParserSettings
+        {
+            get => parserSettings;
+
+            set
+            {
+                parserSettings = value;
+                loader = new HtmlLoader(parserSettings);
+            }
+        }
         public bool IsActive { get => isActive; }
 
         public ParserWorker(IParser<T> parser)
@@ -30,7 +39,7 @@ namespace ParserCore.Core
 
         public ParserWorker(IParser<T> parser, IParserSettings settings) : this(parser)
         {
-            this.parserSettings = settings;
+            ParserSettings = settings;
         }
 
         public void Start()

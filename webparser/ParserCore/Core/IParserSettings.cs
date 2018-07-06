@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ParserCore.Core
 {
-    interface IParserSettings
+    public interface IParserSettings
     {
         string BaseUrl { get; set; }
         string Prefix { get; set; }

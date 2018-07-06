@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ciitilink\CitilinkParser.cs" />
+    <Compile Include="Ciitilink\CitilinkSettings.cs" />
     <Compile Include="Core\HtmlLoader.cs" />
     <Compile Include="Core\IParser.cs" />
     <Compile Include="Core\IParserSettings.cs" />

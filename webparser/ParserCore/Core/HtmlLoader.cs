@@ -1,27 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ParserCore.Core
 {
-    public class HtmlLoader
+    /// <summary>
+    /// Предназначен для получения HTML документа с помощью стандартного системного класса по переданному в метод url.
+    /// HttpClient
+    /// </summary>
+    internal class HtmlLoader
     {
-        readonly HttpClient client; // HttpClient - класс
-        readonly string url;
+        #region flds
 
-        public HtmlLoader(IParserSettings settings)
+        private readonly HttpClient client; // HttpClient - класс
+
+        #endregion flds
+
+        #region ctors
+
+        public HtmlLoader()
         {
-            url = $"{settings.BaseUrl}/{settings.Prefix}/";
             client = new HttpClient();
         }
-        public async Task<string> GetSourceByPageId(int id)
+
+        #endregion ctors
+
+        #region public mthds
+
+        internal async Task<string> GetSourceByUrl(string url)
         {
-            var currentUrl = url.Replace("{CurrentId}", id.ToString());
-            var response = await client.GetAsync(currentUrl);
+            var response = await client.GetAsync(url);
             string source = null;
             if (response != null && response.StatusCode == HttpStatusCode.OK)
             {
@@ -29,5 +37,7 @@ namespace ParserCore.Core
             }
             return source;
         }
+
+        #endregion public mthds
     }
 }

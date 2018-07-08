@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParserCore", "ParserCore\Pa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParserCore.Test", "ParserCore.Test\ParserCore.Test.csproj", "{71DD812D-0D1D-4D84-B0F5-E7334DDC1F34}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTree", "TestTree\TestTree.csproj", "{0EFA58D4-DBA7-4E3D-8C67-782568C43DAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AngleShEx", "AngleShEx\AngleShEx.csproj", "{59847620-7C5E-44F7-8E86-536569D0B3FD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{71DD812D-0D1D-4D84-B0F5-E7334DDC1F34}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71DD812D-0D1D-4D84-B0F5-E7334DDC1F34}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71DD812D-0D1D-4D84-B0F5-E7334DDC1F34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EFA58D4-DBA7-4E3D-8C67-782568C43DAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EFA58D4-DBA7-4E3D-8C67-782568C43DAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EFA58D4-DBA7-4E3D-8C67-782568C43DAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EFA58D4-DBA7-4E3D-8C67-782568C43DAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59847620-7C5E-44F7-8E86-536569D0B3FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59847620-7C5E-44F7-8E86-536569D0B3FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59847620-7C5E-44F7-8E86-536569D0B3FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59847620-7C5E-44F7-8E86-536569D0B3FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

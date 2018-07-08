@@ -18,12 +18,11 @@ namespace ParserCore.Test
         {
             
 
-            var settings = new CitilinkSettings(1, 2);
-            var parser = new CitilinkParser();
+            var settings = new CitilinkSettings();
 
-            var parserWorker = new ParserWorker<string[]>(parser, settings);
+            var parserWorker = new ParserWorker<string[]>(settings);
 
-            parserWorker.OnNewData += ParserWorker_OnNewData;
+            parserWorker.OnNewData += ParserWorker_OnNewData; ;
             parserWorker.OnCompleted += ParserWorker_OnCompleted;
             parserWorker.Start();
 
@@ -32,14 +31,27 @@ namespace ParserCore.Test
             Assert.IsTrue(isCompleted);
         }
 
+        private void ParserWorker_OnNewData(object arg1,string[] arg2)
+        {
+            
+                list.AddRange(arg2);
+            
+        }
+
+        [TestMethod]
+        public void GetFromLink_listStringUrl_listAnonimClass()
+        {
+
+        }
+
         private void ParserWorker_OnCompleted(object obj)
         {
             isCompleted = true;
         }
 
-        private void ParserWorker_OnNewData(object arg1, string[] arg2)
-        {
-            list.AddRange(arg2);
-        }
+        //private void ParserWorker_OnNewData(object arg1, List<string> arg2)
+        //{
+        //    list.AddRange(arg2);
+        //}
     }
 }

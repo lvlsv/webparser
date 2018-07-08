@@ -1,25 +1,38 @@
 ﻿using AngleSharp.Parser.Html;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ParserCore.Core
 {
+    /// <summary>
+    /// Класс включает в себя подготовительную работу с рееьд
+    /// </summary>
+    /// <typeparam name="T"> Предпочтительный тип для вывода </typeparam>
     public class ParserWorker<T> where T : class
     {
-        IParser<T> parser;
-        IParserSettings parserSettings;
+        private bool isActive;
+        private IParser parser;
+        private IParserSettings parserSettings;
+        private HtmlLoader loader;
+        private UrlDispatcher dispatcher;        
 
-        HtmlLoader loader;
+        public ParserWorker(IParserSettings settings)
+        {
+            loader = new HtmlLoader();
+            parser = new Parser();
+            ParserSettings = settings;
+            dispatcher = new UrlDispatcher(settings);
+        }
 
-        bool isActive;
+        public ParserWorker()
+        {
+        }
 
-        public event Action<object, T> OnNewData;
         public event Action<object> OnCompleted;
 
-        public IParser<T> Parser { get => parser; set => parser = value; }
+        public event Action<object, string[]> OnNewData;
+        public bool IsActive { get => isActive; }
+
         public IParserSettings ParserSettings
         {
             get => parserSettings;
@@ -27,19 +40,11 @@ namespace ParserCore.Core
             set
             {
                 parserSettings = value;
-                loader = new HtmlLoader(parserSettings);
             }
         }
-        public bool IsActive { get => isActive; }
-
-        public ParserWorker(IParser<T> parser)
+        public void Abort()
         {
-            Parser = parser;
-        }
-
-        public ParserWorker(IParser<T> parser, IParserSettings settings) : this(parser)
-        {
-            ParserSettings = settings;
+            isActive = false;
         }
 
         public void Start()
@@ -47,30 +52,40 @@ namespace ParserCore.Core
             isActive = true;
             Worker();
         }
-        public void Abprt()
-        {
-            isActive = false;
-        }
+        //private async void Worker()
+        //{
+        //    for (int i = parserSettings.StartPoint; i <= parserSettings.EndPoint; i++)
+        //    {
+        //        if (!isActive)
+        //        {
+        //            OnCompleted?.Invoke(this);
+        //            return;
+        //        }
+        //        var source = await loader.GetSourceByUrl();
+        //        var domParser = new HtmlParser();
+        //        var document = await domParser.ParseAsync(source);
+        //        var result = parser.Parse(document);
+        //        OnNewData?.Invoke(this, result);
+        //    }
+        //    OnCompleted?.Invoke(this);
+        //    isActive = false;
+        //}
 
         private async void Worker()
-        {
-            for (int i = parserSettings.StartPoint; i <= parserSettings.EndPoint; i++)
+        {            
+            if (!isActive)
             {
-                if (!isActive)
-                {
-                    OnCompleted?.Invoke(this);
-                    return;
-                }
-                var source = await loader.GetSourceByPageId(i);
-                var domParser = new HtmlParser();
-                var document = await domParser.ParseAsync(source);
-                var result = parser.Parse(document);
-                OnNewData?.Invoke(this, result);
+                OnCompleted?.Invoke(this);
+                return;
             }
+            var source = await loader.GetSourceByUrl(parserSettings.BaseUrl);
+            var domParser = new HtmlParser();
+            var document = await domParser.ParseAsync(source);
+            var result = parser.Parse(document, parserSettings.MenuItemTagName, parserSettings.MenuItemClassesName);
+            OnNewData?.Invoke(this, result);
+           
             OnCompleted?.Invoke(this);
             isActive = false;
         }
-
-
     }
 }
